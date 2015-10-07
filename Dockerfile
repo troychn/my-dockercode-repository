@@ -13,11 +13,25 @@ RUN mkdir -p /var/run/sshd
 # 设置root ssh远程登录密码为123456
 RUN echo "root:123456" | chpasswd 
 
-# 添加orache java7源，一次性安装vim，wget，curl，java7，tomcat7等必备软件
-# RUN apt-get install python-software-properties
-# RUN add-apt-repository ppa:webupd8team/java
+# 安装vim，wget，curl，java7，tomcat7等必备软件
 RUN apt-get update
-RUN apt-get install -y vim wget curl openjdk-7-jre tomcat7
+RUN apt-get install -y vim 
+# 安装wget
+RUN apt-get update
+RUN apt-get install -y wget 
+# 安装curl
+RUN apt-get update
+RUN apt-get install -y curl 
+# 安装java7
+RUN apt-get update
+RUN \
+  apt-get update && \
+  apt-get install -y openjdk-7-jre && \
+  rm -rf /var/lib/apt/lists/*
+# 安装tomcat7
+RUN apt-get update
+RUN apt-get install -y tomcat7
+
 
 # 设置JAVA_HOME环境变量
 RUN update-alternatives --display java
