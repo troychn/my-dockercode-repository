@@ -14,6 +14,10 @@ RUN mkdir -p /var/run/sshd
 # 设置root ssh远程登录密码为123456
 RUN echo "root:123456" | chpasswd 
 
+# install vim
+RUN apt-get remove vim-common
+RUN apt-get -y install vim
+
   
 # Install curl  
 RUN apt-get -y install curl  
