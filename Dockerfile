@@ -14,8 +14,8 @@ RUN mkdir -p /var/run/sshd
 RUN echo "root:123456" | chpasswd 
 
 # 添加orache java7源，一次性安装vim，wget，curl，java7，tomcat7等必备软件
-RUN apt-get install python-software-properties
-RUN add-apt-repository ppa:webupd8team/java
+# RUN apt-get install python-software-properties
+# RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
 RUN apt-get install -y vim wget curl oracle-java7-installer tomcat7
 
