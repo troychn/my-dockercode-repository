@@ -16,9 +16,7 @@ RUN echo "root:123456" | chpasswd
 
 # 安装java7
 RUN apt-get update
-RUN \
-  apt-get update && \
-  apt-get install -y openjdk-7-jre 
+RUN apt-get install -y openjdk-7-jre 
   
 # 安装tomcat7
 RUN apt-get update
