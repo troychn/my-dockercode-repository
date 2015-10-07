@@ -13,15 +13,7 @@ RUN mkdir -p /var/run/sshd
 # 设置root ssh远程登录密码为123456
 RUN echo "root:123456" | chpasswd 
 
-# 安装vim，wget，curl，java7，tomcat7等必备软件
-RUN apt-get update
-RUN apt-get install -y vim 
-# 安装wget
-RUN apt-get update
-RUN apt-get install -y wget 
-# 安装curl
-RUN apt-get update
-RUN apt-get install -y curl 
+
 # 安装java7
 RUN apt-get update
 RUN \
