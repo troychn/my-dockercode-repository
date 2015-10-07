@@ -17,12 +17,12 @@ RUN echo "root:123456" | chpasswd
 # RUN apt-get install python-software-properties
 # RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
-RUN apt-get install -y vim wget curl oracle-java7-installer tomcat7
+RUN apt-get install -y vim wget curl openjdk-7-jre tomcat7
 
 # 设置JAVA_HOME环境变量
 RUN update-alternatives --display java
-RUN echo "JAVA_HOME=/usr/lib/jvm/java-7-oracle">> /etc/environment
-RUN echo "JAVA_HOME=/usr/lib/jvm/java-7-oracle">> /etc/default/tomcat7
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64">> /etc/environment
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64">> /etc/default/tomcat7
 
 # 容器需要开放SSH 22端口
 EXPOSE 22
