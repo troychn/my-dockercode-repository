@@ -15,6 +15,7 @@ RUN mkdir -p /var/run/sshd
 RUN echo "root:123456" | chpasswd 
 
 # install vim
+RUN apt-get remove vim-common
 RUN apt-get -y install vim
 
   
