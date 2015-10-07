@@ -1,6 +1,6 @@
 #VERSION 0.0.1
 # 默认ubuntu server长期支持版本，当前是12.04
-FROM ubuntu
+FROM ubuntu:latest
 # 签名啦
 MAINTAINER troylc "wwaa1983@163.com"
 
