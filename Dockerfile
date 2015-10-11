@@ -37,7 +37,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-7-oracle/
 RUN cd /tmp && curl -L 'http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.8/bin/apache-tomcat-7.0.8.tar.gz' | tar -xz  
 RUN mv /tmp/apache-tomcat-7.0.8/ /opt/tomcat7/  
   
-ENV CATALINA_HOME /opt/tomcat7  
+ENV CATALINA_HOME /opt/tomcat7
 ENV PATH $PATH:$CATALINA_HOME/bin  
   
 ADD tomcat7.sh /etc/init.d/tomcat7  
