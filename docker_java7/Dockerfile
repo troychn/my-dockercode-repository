@@ -1,8 +1,8 @@
 # VERSION 0.0.1
-# 默认ubuntu server长期支持版本，当前是12.04
+# 默认ubuntu server长期支持版本，当前是14.04
 FROM ubuntu
 # 签名啦
-MAINTAINER troylc "wwaa1983@gmail.com"
+MAINTAINER troylc "wwaa1983@163.com"
 
 # 更新源，安装ssh server
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe"> /etc/apt/sources.list
