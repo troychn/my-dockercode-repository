@@ -1,5 +1,5 @@
 #
-# MAINTAINER        Carson,C.J.Zeong <zcy@nicescale.com>
+# MAINTAINER        troylc <wwaa1983@163.com>
 # DOCKER-VERSION    1.8.3
 #
 # Dockerizing CentOS7: Dockerfile for building CentOS images
