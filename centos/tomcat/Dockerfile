@@ -15,18 +15,18 @@ RUN yum install -y curl tar openssh-server vim-enhanced passwd sudo hostname net
     yum clean all
 
 RUN sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
- 
-# æ·»åŠ æµ‹è¯•ç”¨æˆ·adminï¼Œå¯†ç adminï¼Œå¹¶ä¸”å°†æ­¤ç”¨æˆ·æ·»åŠ åˆ°sudoersé‡Œ
+
+# Ìí¼Ó²âÊÔÓÃ»§admin£¬ÃÜÂëadmin£¬²¢ÇÒ½«´ËÓÃ»§Ìí¼Óµ½sudoersÀï
 # RUN useradd admin
 RUN echo "root:123456" | chpasswd
 RUN echo "root   ALL=(ALL)       ALL" >> /etc/sudoers
 
-# ä¸‹é¢è¿™ä¸¤å¥æ¯”è¾ƒç‰¹æ®Šï¼Œåœ¨centos6ä¸Šå¿…é¡»è¦æœ‰ï¼Œå¦åˆ™åˆ›å»ºå‡ºæ¥çš„å®¹å™¨sshdä¸èƒ½ç™»å½•
+# ÏÂÃæÕâÁ½¾ä±È½ÏÌØÊâ£¬ÔÚcentos6ÉÏ±ØĞëÒªÓĞ£¬·ñÔò´´½¨³öÀ´µÄÈİÆ÷sshd²»ÄÜµÇÂ¼
 RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN mkdir /var/run/sshd
 
-#ä¸‹é¢æ˜¯è®¾ç½®tomcatçš„ç¯å¢ƒå˜é‡ä»¥åŠå·¥ä½œç›®å½•
+#ÏÂÃæÊÇÉèÖÃtomcatµÄ»·¾³±äÁ¿ÒÔ¼°¹¤×÷Ä¿Â¼
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
 RUN mkdir -p "$CATALINA_HOME"
@@ -59,7 +59,7 @@ RUN set -x \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz*
 
-#æŠŠtomcatæœåŠ¡åŠ å…¥åˆ°ç³»ç»ŸæœåŠ¡ä¸­
+#°Ñtomcat·şÎñ¼ÓÈëµ½ÏµÍ³·şÎñÖĞ
 ADD tomcat.sh /etc/init.d/tomcat
 RUN chmod 755 /etc/init.d/tomcat
 
@@ -67,5 +67,5 @@ EXPOSE 22
 EXPOSE 8080
 
 # CMD ["catalina.sh", "run"]
-# è®¾ç½®tomcatåˆå§‹åŒ–è¿è¡Œï¼ŒSSHç»ˆç«¯æœåŠ¡ä½œä¸ºåå°è¿è¡Œ
+# ÉèÖÃtomcat³õÊ¼»¯ÔËĞĞ£¬SSHÖÕ¶Ë·şÎñ×÷ÎªºóÌ¨ÔËĞĞ
 ENTRYPOINT service tomcat start && /usr/sbin/sshd -D && tail -f /usr/local/tomcat/logs/catalina.out
