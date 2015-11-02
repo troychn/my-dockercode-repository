@@ -11,7 +11,7 @@ ENV TZ "Asia/Shanghai"
 ENV TERM xterm
 
 RUN apt-get update && \
-	apt-get install -y curl wget vim-enhanced passwd sudo hostname net-tools rsync man
+	apt-get install -y curl wget vim passwd sudo hostname net-tools rsync man
 
 
 
