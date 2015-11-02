@@ -10,7 +10,7 @@ MAINTAINER helloWorld,troylc <wwaa1983@163.com>
 ENV TZ "Asia/Shanghai"
 ENV TERM xterm
 
-RUN yum install -y curl tar openssh-server vim-enhanced passwd sudo hostname net-tools man && \
+RUN yum install -y curl tar openssh-server vim-enhanced passwd sudo net-tools man && \
     yum install -y gcc gcc-c++ java-1.8.0-openjdk && \
     yum clean all
 
@@ -21,9 +21,6 @@ RUN sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
 RUN echo "root:123456" | chpasswd
 #RUN echo "root   ALL=(ALL)       ALL" >> /etc/sudoers
 
-# 下面这两句比较特殊，在centos6上必须要有，否则创建出来的容器sshd不能登录
-RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
-RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN mkdir /var/run/sshd
 
 #下面是设置tomcat的环境变量以及工作目录
