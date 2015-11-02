@@ -59,13 +59,10 @@ RUN set -x \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz*
 
-#把tomcat服务加入到系统服务中
-ADD tomcat.sh /etc/init.d/tomcat
-RUN chmod 755 /etc/init.d/tomcat
 
 EXPOSE 22
 EXPOSE 8080
 
 # CMD ["catalina.sh", "run"]
 # 设置tomcat初始化运行，SSH终端服务作为后台运行
-ENTRYPOINT service tomcat start && /usr/sbin/sshd -D && tail -f /usr/local/tomcat/logs/catalina.out
+ENTRYPOINT catalina.sh run && /usr/sbin/sshd -D
