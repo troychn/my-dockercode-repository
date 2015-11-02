@@ -11,9 +11,8 @@ ENV TZ "Asia/Shanghai"
 ENV TERM xterm
 
 RUN yum install -y curl wget tar bzip2 unzip vim-enhanced passwd sudo yum-utils hostname net-tools rsync man && \
-    yum install -y gcc gcc-c++ git make automake cmake patch logrotate python-devel libpng-devel libjpeg-devel && \
+    yum install -y gcc gcc-c++ git make automake cmake patch java-1.8.0-openjdk && \
     yum clean all
-RUN yum  -y install java-1.8.0-openjdk wget
 
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
