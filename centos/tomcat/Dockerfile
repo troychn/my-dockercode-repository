@@ -10,10 +10,23 @@ MAINTAINER helloWorld,troylc <wwaa1983@163.com>
 ENV TZ "Asia/Shanghai"
 ENV TERM xterm
 
-RUN yum install -y curl wget tar bzip2 unzip vim-enhanced passwd sudo yum-utils hostname net-tools rsync man && \
-    yum install -y gcc gcc-c++ git make automake cmake patch java-1.8.0-openjdk && \
+RUN yum install -y curl tar openssh-server vim-enhanced passwd sudo hostname net-tools man && \
+    yum install -y gcc gcc-c++ java-1.8.0-openjdk && \
     yum clean all
 
+RUN sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+ 
+# 添加测试用户admin，密码admin，并且将此用户添加到sudoers里
+# RUN useradd admin
+RUN echo "root:123456" | chpasswd
+RUN echo "root   ALL=(ALL)       ALL" >> /etc/sudoers
+
+# 下面这两句比较特殊，在centos6上必须要有，否则创建出来的容器sshd不能登录
+RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN mkdir /var/run/sshd
+
+#下面是设置tomcat的环境变量以及工作目录
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
 RUN mkdir -p "$CATALINA_HOME"
@@ -46,6 +59,13 @@ RUN set -x \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz*
 
+#把tomcat服务加入到系统服务中
+ADD tomcat.sh /etc/init.d/tomcat
+RUN chmod 755 /etc/init.d/tomcat
+
 EXPOSE 22
 EXPOSE 8080
-CMD ["catalina.sh", "run"]
+
+# CMD ["catalina.sh", "run"]
+# 设置tomcat初始化运行，SSH终端服务作为后台运行
+ENTRYPOINT service tomcat start && /usr/sbin/sshd -D && tail -f /usr/local/tomcat/logs/catalina.out
