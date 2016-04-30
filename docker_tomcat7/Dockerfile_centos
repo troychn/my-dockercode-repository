@@ -1,0 +1,50 @@
+#
+# MAINTAINER  troylc <liu_cheng@topsec.com.cn>
+# DOCKER-VERSION  1.8.3
+#
+# Dockerizing CentOS7: Dockerfile for building CentOS images
+#
+FROM centos
+MAINTAINER helloWorld,troylc <liu_cheng@topsec.com.cn>
+
+ENV TZ "Asia/Shanghai"
+ENV TERM xterm
+
+# 安装必备软件包
+RUN yum install -y curl tar vim-enhanced passwd net-tools  && \
+    yum clean all
+
+# Install JDK 7
+RUN cd /tmp &&  curl -L 'http://download.oracle.com/otn-pub/java/jdk/7u65-b17/jdk-7u65-linux-x64.tar.gz' -H 'Cookie: oraclelicense=accept-securebackup-cookie; gpw_e24=Dockerfile' | tar -xz
+RUN mkdir -p /usr/lib/jvm
+RUN mv /tmp/jdk1.7.0_65/ /usr/lib/jvm/java-7-oracle/
+
+RUN echo "JAVA_HOME=/usr/java/jdk1.7.0_71">>/etc/profile
+
+#下面是设置tomcat的环境变量以及工作目录
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH
+RUN mkdir -p "$CATALINA_HOME"
+WORKDIR $CATALINA_HOME
+
+
+# Install tomcat8
+RUN cd /tmp && curl -L 'http://mirror.catn.com/pub/apache/tomcat/tomcat-8/v8.0.28/bin/apache-tomcat-8.0.28.tar.gz' | tar -xz
+RUN mv /tmp/apache-tomcat-8.0.28/ /opt/tomcat8/
+
+#下面是设置tomcat的环境变量以及工作目录
+ENV CATALINA_HOME /opt/tomcat8/
+ENV PATH $CATALINA_HOME/bin:$PATH
+RUN mkdir -p "$CATALINA_HOME"
+WORKDIR $CATALINA_HOME
+
+RUN rm -rf /tmp/*
+
+ADD tomcat.sh /etc/init.d/tomcat
+RUN chmod 755 /etc/init.d/tomcat
+
+
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
+# 设置tomcat初始化运行，SSH终端服务作为后台运行
